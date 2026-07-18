@@ -1,11 +1,11 @@
 const axios = require("axios");
 require("dotenv").config();
-async function main() {
+async function getRandomAnimalUrl() {
 
   const animals = [
     {api: "https://api.thedogapi.com/v1/images/search?limit=1", getUrl: (data) => data[0].url },
     {api: "https://api.thecatapi.com/v1/images/search?limit=1", getUrl: (data) => data[0].url},
-    {api:  "https://randomfox.ca/floof", getUrl: (data) => data.image},
+    {api:  "https://randomfox.ca/floof/", getUrl: (data) => data.image},
   ];
   const choice = animals[Math.floor(Math.random() * animals.length)];
   const response = await axios.get(choice.api);
@@ -24,11 +24,11 @@ const app = new App({
 app.command("/halden-start", async ({ command, ack, respond }) => {
   await ack();
   const minutes = Number(command.text) || 10;
-  const channe1Id = command.channel_id;
+  const channelId = command.channel_id;
 
   if (intervals[channelId]) clearInterval(intervals[channelId]);
 
-  intervals[channelId] = setinterval(async () => {
+  intervals[channelId] = setInterval(async () => {
     try {
       const imageUrl= await getRandomAnimalUrl();
       await app.client.chat.postMessage({
