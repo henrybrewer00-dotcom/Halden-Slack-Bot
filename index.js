@@ -26,7 +26,7 @@ app.command("/halden-start", async ({ command, ack, respond }) => {
   const minutes = Number(command.text) || 10;
   const channe1Id = command.channel_id;
 
-  if(intervals[channel1Id]) clearInterval(intervals[channel1Id]);
+  if (intervals[channelId]) clearInterval(intervals[channelId]);
 
   intervals[channel1Id] = setinterval(async () => {
     try {
