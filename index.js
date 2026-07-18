@@ -79,11 +79,22 @@ app.command("/halden-help", async ({ ack, respond }) => {
 
 app.command("/halden-cat", async ({ ack, respond }) => {
     await ack();
-    await respond({
-      text:
-  `brooo!!!:
-  Bro, cats are 10x better than dogs, get a dog photo with /halden-dog, be cool...  `
-    });
+
+    try {
+      const response = await axios.get("https://api.thecatapi.com/v1/images/search?limit=1");
+      await respond({
+        text: "Cat Image!",
+        blocks: [
+            {
+                type: "image",
+                image_url: response.data[0].url,
+                alt_text: "cat"
+            }
+        ]
+      })
+    } catch (err) {
+      await respond({ text: "Failed to fetch a cat image...." });
+    }
   });
 app.command("/halden-dog", async ({ ack, respond }) => {
     await ack();
