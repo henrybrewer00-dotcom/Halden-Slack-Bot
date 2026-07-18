@@ -28,11 +28,11 @@ app.command("/halden-start", async ({ command, ack, respond }) => {
 
   if (intervals[channelId]) clearInterval(intervals[channelId]);
 
-  intervals[channel1Id] = setinterval(async () => {
+  intervals[channelId] = setinterval(async () => {
     try {
       const imageUrl= await getRandomAnimalUrl();
       await app.client.chat.postMessage({
-        channel: channel1Id,
+        channel: channelId,
         text: "Motivation DROP!",
         blocks: [{ type: "image", image_url: imageUrl, alt_text: "motivation animal"}]
       });
@@ -45,10 +45,10 @@ app.command("/halden-start", async ({ command, ack, respond }) => {
 
 app.command("/halden-stop", async ({ command, ack, respond }) => {
   await ack();
-  const channel1Id = command.channel_id;
-  if (intervals[channel1Id]) {
-    clearInterval(intervals[channel1Id]);
-    delete intervals[channel1Id];
+  const channelId = command.channel_id;
+  if (intervals[channelId]) {
+    clearInterval(intervals[channelId]);
+    delete intervals[channelId];
     await respond({ text: "Stoopppped!!!"});
  } else {
   await respond({ text: "Nothing was running.........." });
